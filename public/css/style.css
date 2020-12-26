@@ -1,0 +1,102 @@
+body {
+  margin: 0;
+}
+
+/* bootstrapの謎の右の余白を消す */
+#_wrap {
+  overflow: hidden;
+  background: #f7f7f7;
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+main {
+  flex: 1;
+}
+
+section {
+  width: 80%;
+  margin: 0 auto;
+}
+
+aside {
+  width: 60%;
+}
+
+/* スマホ用 */
+@media screen and (max-width: 768px) {
+  section {
+    width: 95%;
+  }
+
+  aside {
+    display: none;
+  }
+}
+
+@media screen and (max-width: 992px) {
+  aside {
+    display: none;
+  }
+}
+
+/* https://saruwakakun.com/html-css/reference/speech-bubble#section7ここから */
+/*以下、①背景色など*/
+.line-bc {
+  padding: 20px 10px;
+  max-width: 868px;
+  margin: 15px auto;
+  font-size: 14px;
+  background: #88b3f7;
+}
+
+/* 吹き出し左 */
+.balloon1 {
+  position: relative;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #000;
+  color: #fff;
+  max-width: 250px;
+  font-size: 15px;
+  word-wrap: break-word;
+  margin-left: 10px;
+}
+
+/* 三角アイコン */
+.balloon1::before {
+  content: '';
+  display: inline-block;
+  position: absolute;
+  top: 3px;
+  left: -19px;
+  border: 8px solid transparent;
+  border-right: 18px solid #000;
+  -webkit-transform: rotate(35deg);
+  transform: rotate(35deg);
+}
+
+/* 吹き出し右 */
+.balloon2 {
+  position: relative;
+  padding: 10px;
+  border-radius: 10px;
+  background-color: #30e852;
+  max-width: 250px;
+  font-size: 15px;
+  word-wrap: break-word;
+  margin-right: 20px;
+}
+
+/* 三角アイコン */
+.balloon2::before {
+  content: '';
+  position: absolute;
+  top: 3px;
+  right: -19px;
+  border: 8px solid transparent;
+  border-left: 18px solid #30e852;
+  -webkit-transform: rotate(-35deg);
+  transform: rotate(-35deg);
+}

@@ -1,0 +1,12 @@
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "type": "chrome",
+      "request": "launch",
+      "name": "name",
+      "url": "http://localhost:1234",
+      "webRoot": "${workspaceFolder}/src"
+    }
+  ]
+}
