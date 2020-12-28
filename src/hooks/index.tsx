@@ -11,27 +11,9 @@ const ifvisible = require('ifvisible.js');
 
 // Twitter
 export const useTwitter = () => {
-  const [uid] = useRecoilState(state.uid);
-  const [, setLoading] = useRecoilState(state.loading);
-  const [, setPopUp] = useRecoilState(state.popUp);
-
   const login = () => {
-    // ローディング画面にする
-    setLoading(true);
-
-    setPopUp(true);
-
-    // delete connections
-    firebase.database().ref(constant.table.connections).child(uid).remove();
-
     const provider = new firebase.auth.TwitterAuthProvider();
-    firebase
-      .auth()
-      .signInWithPopup(provider)
-      .then(() => {
-        window.location.reload();
-      })
-      .catch(e => window.location.reload());
+    firebase.auth().signInWithRedirect(provider);
   };
 
   const logout = () => {
@@ -42,7 +24,7 @@ export const useTwitter = () => {
       .then(() => {
         window.location.reload();
       })
-      .catch(error => {});
+      .catch(() => {});
   };
 
   return { login, logout };
@@ -50,7 +32,6 @@ export const useTwitter = () => {
 
 // 画面監視
 export const useDisplay = () => {
-  const [popUp] = useRecoilState(state.popUp);
   const [active, setActive] = React.useState(true);
   const [init, setInit] = React.useState(false);
 
@@ -66,7 +47,7 @@ export const useDisplay = () => {
   });
 
   React.useMemo(() => {
-    if (active && init && !popUp) {
+    if (active && init) {
       // 再接続処理
       firebase.database().goOnline();
     }
@@ -74,7 +55,7 @@ export const useDisplay = () => {
     if (!init) {
       setInit(true);
     }
-  }, [active, init, popUp]);
+  }, [active, init]);
 
   return {};
 };

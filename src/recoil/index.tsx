@@ -45,10 +45,6 @@ const state = {
     key: counter.count,
     default: false,
   }),
-  popUp: atom({
-    key: counter.count,
-    default: false,
-  }),
 };
 
 export default state;
