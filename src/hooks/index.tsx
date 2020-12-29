@@ -84,10 +84,10 @@ export const usePost = () => {
     const _storageRef = firebase.storage().ref().child(_fileName);
 
     // 画像保存
-    _storageRef.put(e.target.files[0]).then(() => {
-      _storageRef
-        .getDownloadURL()
-        .then(async (url: string) => {
+    _storageRef
+      .put(e.target.files[0])
+      .then(() => {
+        _storageRef.getDownloadURL().then(async (url: string) => {
           // データ保存
           await firebase.database().ref(constant.table.boards).push({
             uid: uid,
@@ -99,12 +99,12 @@ export const usePost = () => {
           });
 
           setLoading(false);
-        })
-        .catch(() => {
-          alert('画像のサイズは5MBまでです。');
-          location.reload();
         });
-    });
+      })
+      .catch(() => {
+        alert('画像のサイズは5MBまでです。');
+        window.location.reload();
+      });
   };
 
   const post = async (e: React.FormEvent<HTMLFormElement>) => {
