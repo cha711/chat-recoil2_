@@ -7,11 +7,25 @@ const Post = () => {
   const [uname, setUname] = useRecoilState(state.uname);
   const [message, setMessage] = useRecoilState(state.message);
 
-  const { post } = usePost();
+  const { post, uploadImage } = usePost();
 
   return React.useMemo(() => {
     return (
       <>
+        <label>
+          <span className="btn btn-info">
+            画像アップロード
+            <input
+              type="file"
+              style={{ display: 'none' }}
+              accept="image/*"
+              onChange={e => uploadImage(e)}
+            />
+          </span>
+        </label>
+
+        <hr />
+
         <form onSubmit={e => post(e)}>
           <div className="form-group text-center">
             <input
@@ -57,7 +71,7 @@ const Post = () => {
         <hr />
       </>
     );
-  }, [message, uname, post, setMessage, setUname]);
+  }, [message, uname, post, uploadImage, setMessage, setUname]);
 };
 
 export default Post;

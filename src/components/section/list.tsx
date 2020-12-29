@@ -7,6 +7,27 @@ import moment from 'moment';
 moment.locale('ja');
 const reactStringReplace = require('react-string-replace');
 
+const comment = (message: string) => {
+  return (
+    <>
+      {reactStringReplace(
+        message,
+        /(https?:\/\/\S+)/g,
+        (match: string, j: number) => (
+          <a
+            href={match}
+            key={match + j}
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            {match}
+          </a>
+        )
+      )}
+    </>
+  );
+};
+
 const List = () => {
   const [uid] = useRecoilState(state.uid);
   const [list] = useRecoilState(state.list);
@@ -14,7 +35,7 @@ const List = () => {
   return React.useMemo(() => {
     const html = list.map((m, i) => {
       if (m.uid === uid) {
-        // 左吹き出し
+        // 右吹き出し
         return (
           <div key={i}>
             <div className="clearfix">
@@ -28,19 +49,10 @@ const List = () => {
 
             <div className="clearfix">
               <div className="balloon2 float-right">
-                {reactStringReplace(
-                  m.message,
-                  /(https?:\/\/\S+)/g,
-                  (match: string, j: number) => (
-                    <a
-                      href={match}
-                      key={match + j}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                    >
-                      {match}
-                    </a>
-                  )
+                {m.image === true ? (
+                  <img src={m.message} alt="画像" width="100%" />
+                ) : (
+                  comment(m.message)
                 )}
               </div>
             </div>
@@ -56,7 +68,7 @@ const List = () => {
         );
       }
 
-      // 右吹き出し
+      // 左吹き出し
       return (
         <div key={i}>
           <div style={{ fontSize: 12, color: '#fff' }}>
@@ -66,19 +78,12 @@ const List = () => {
           <div style={{ fontSize: 12, color: '#fff' }}>{m.uid}</div>
           <div className="clearfix">
             <div className="balloon1 float-left">
-              {reactStringReplace(
-                m.message,
-                /(https?:\/\/\S+)/g,
-                (match: string, j: number) => (
-                  <a
-                    href={match}
-                    key={match + j}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                  >
-                    {match}
-                  </a>
-                )
+              {m.image === true ? (
+                <>
+                  <img src={m.message} alt="画像" width="100%" />
+                </>
+              ) : (
+                comment(m.message)
               )}
             </div>
           </div>
@@ -94,7 +99,12 @@ const List = () => {
       );
     });
 
-    return <div className="line-bc">{html}</div>;
+    return (
+      <>
+        <p>最新50件</p>
+        <div className="line-bc">{html}</div>
+      </>
+    );
   }, [list, uid]);
 };
 

@@ -29,6 +29,7 @@ const state = {
     default: [] as {
       uid: string;
       uname?: string;
+      image?: boolean;
       message: string;
       createdAt: number;
     }[],

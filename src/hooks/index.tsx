@@ -65,6 +65,44 @@ export const usePost = () => {
   const [uid] = useRecoilState(state.uid);
   const [uname] = useRecoilState(state.uname);
   const [message, setMessage] = useRecoilState(state.message);
+  const [, setLoading] = useRecoilState(state.loading);
+
+  // 画像アップロード
+  const uploadImage = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files == null) {
+      return;
+    }
+
+    setLoading(true);
+
+    const _s = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    const _fileName =
+      [...Array(10)]
+        .map(() => _s[Math.floor(Math.random() * _s.length)])
+        .join('') + new Date().getTime();
+
+    const _storageRef = firebase.storage().ref().child(_fileName);
+
+    // 画像保存
+    _storageRef.put(e.target.files[0]).then(() => {
+      _storageRef
+        .getDownloadURL()
+        .then(async (url: string) => {
+          // データ保存
+          await firebase.database().ref(constant.table.boards).push({
+            uid: uid,
+            uname: uname,
+            message: url,
+            image: true,
+            createdAt: new Date().getTime(),
+            updatedAt: new Date().getTime(),
+          });
+
+          setLoading(false);
+        })
+        .catch(() => {});
+    });
+  };
 
   const post = async (e: React.FormEvent<HTMLFormElement>) => {
     if (!(e.target as HTMLInputElement).checkValidity()) {
@@ -81,6 +119,7 @@ export const usePost = () => {
       uid: uid,
       uname: uname,
       message: _message.trim(),
+      image: false,
       createdAt: new Date().getTime(),
       updatedAt: new Date().getTime(),
     });
@@ -91,7 +130,7 @@ export const usePost = () => {
     pushNotification(`${uid}\n\n${message}`);
   };
 
-  return { post };
+  return { post, uploadImage };
 };
 
 // 初期化
