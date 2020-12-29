@@ -100,7 +100,10 @@ export const usePost = () => {
 
           setLoading(false);
         })
-        .catch(() => {});
+        .catch(() => {
+          alert('画像のサイズは5MBまでです。');
+          location.reload();
+        });
     });
   };
 
