@@ -49,13 +49,12 @@ const Post = () => {
               maxLength={150}
               value={message}
               rows={3}
-              onChange={e => setMessage(e.target.value)}
-              onKeyDown={e =>
-                e.key === 'Enter'
-                  ? (document.getElementById('submit') as HTMLElement).click()
-                  : ''
-              }
-            ></textarea>
+              onChange={(e) => setMessage(e.target.value)}
+              onKeyPress={(e) =>
+                e.key === "Enter"
+                  ? (document.getElementById("submit") as HTMLElement).click()
+                  : ""
+              }></textarea>
 
             <div className="text-center">
               <input
