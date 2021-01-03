@@ -9,17 +9,18 @@ const Post = () => {
 
   const { post, uploadImage } = usePost();
 
-  const postMesseage = (keyEvent: React.KeyboardEvent<HTMLTextAreaElement>) => {
-    const submitButton = document.getElementById("submit")
-      ? document.getElementById("submit")
-      : null;
-    if (submitButton && message && keyEvent.key === "Enter") {
-      submitButton.click();
-      setMessage("");
-    }
-  };
-
   return React.useMemo(() => {
+    const postMesseage = (
+      keyEvent: React.KeyboardEvent<HTMLTextAreaElement>
+    ) => {
+      const submitButton = document.getElementById("submit")
+        ? document.getElementById("submit")
+        : null;
+      if (submitButton && message && keyEvent.key === "Enter") {
+        submitButton.click();
+        setMessage("");
+      }
+    };
     return (
       <>
         <label>
@@ -76,7 +77,7 @@ const Post = () => {
         <hr />
       </>
     );
-  }, [uname, message, uploadImage, post, setUname, setMessage, postMesseage]);
+  }, [uname, message, uploadImage, post, setUname, setMessage]);
 };
 
 export default Post;
