@@ -76,7 +76,7 @@ const Post = () => {
         <hr />
       </>
     );
-  }, [message, uname, post, uploadImage, setMessage, setUname]);
+  }, [uname, message, uploadImage, post, setUname, setMessage, postMesseage]);
 };
 
 export default Post;
