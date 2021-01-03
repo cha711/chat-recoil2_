@@ -46,7 +46,6 @@ const Post = () => {
               size={30}
               value={uname}
               onChange={e => setUname(e.target.value)}
-              onKeyDown={e => (e.key === 'Enter' ? '' : '')}
             />
           </div>
 
