@@ -1,7 +1,7 @@
 {
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build"
+    "build": "mkdir build && mv _redirects build/"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.12.11",
